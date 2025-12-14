@@ -2,18 +2,33 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiMapPin, FiSend } from 'react-icons/fi';
 import toast from 'react-hot-toast';
+import axios from '../utils/axios';
+import { useAuth } from '../contexts/AuthContext';
 
 const Contact = () => {
   useEffect(() => {
     document.title = 'Contact Us - LoanLink';
   }, []);
 
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
+    name: user?.name || '',
+    email: user?.email || '',
     subject: '',
     message: '',
   });
+  const [loading, setLoading] = useState(false);
+
+  // Update form when user logs in
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.name || prev.name,
+        email: user.email || prev.email,
+      }));
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     setFormData({
@@ -22,16 +37,25 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real application, this would send the form data to a backend
-    toast.success('Thank you for contacting us! We will get back to you soon.');
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-    });
+    setLoading(true);
+
+    try {
+      const response = await axios.post('/api/contact', formData);
+      toast.success(response.data.message || 'Thank you for contacting us! We will get back to you soon.');
+      setFormData({
+        name: user?.name || '',
+        email: user?.email || '',
+        subject: '',
+        message: '',
+      });
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Failed to send message. Please try again.';
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactInfo = [
@@ -165,6 +189,11 @@ const Contact = () => {
                       className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="Your Name"
                     />
+                    {user && (
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        Logged in as: {user.name}
+                      </p>
+                    )}
                   </div>
                   <div>
                     <label
@@ -183,6 +212,11 @@ const Contact = () => {
                       className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="your.email@example.com"
                     />
+                    {user && (
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        Your message will be saved to your account
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div>
@@ -223,10 +257,11 @@ const Contact = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition flex items-center justify-center space-x-2"
+                  disabled={loading}
+                  className="w-full bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <FiSend className="w-5 h-5" />
-                  <span>Send Message</span>
+                  <span>{loading ? 'Sending...' : 'Send Message'}</span>
                 </button>
               </form>
             </motion.div>

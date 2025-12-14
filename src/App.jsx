@@ -17,11 +17,13 @@ import Dashboard from './pages/Dashboard';
 import ManageUsers from './pages/Dashboard/Admin/ManageUsers';
 import AllLoanAdmin from './pages/Dashboard/Admin/AllLoan';
 import LoanApplications from './pages/Dashboard/Admin/LoanApplications';
+import ContactMessages from './pages/Dashboard/Admin/ContactMessages';
 import AddLoan from './pages/Dashboard/Manager/AddLoan';
 import ManageLoans from './pages/Dashboard/Manager/ManageLoans';
 import PendingLoans from './pages/Dashboard/Manager/PendingLoans';
 import ApprovedLoans from './pages/Dashboard/Manager/ApprovedLoans';
 import MyLoans from './pages/Dashboard/Borrower/MyLoans';
+import MyMessages from './pages/Dashboard/Borrower/MyMessages';
 import Profile from './pages/Dashboard/Profile';
 import NotFound from './pages/NotFound';
 import PrivateRoute from './components/PrivateRoute';
@@ -90,6 +92,14 @@ function App() {
                   </PrivateRoute>
                 }
               />
+              <Route
+                path="dashboard/contact-messages"
+                element={
+                  <PrivateRoute allowedRoles={['admin']}>
+                    <ContactMessages />
+                  </PrivateRoute>
+                }
+              />
               {/* Manager Routes */}
               <Route
                 path="dashboard/add-loan"
@@ -129,6 +139,14 @@ function App() {
                 element={
                   <PrivateRoute allowedRoles={['borrower']}>
                     <MyLoans />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="dashboard/my-messages"
+                element={
+                  <PrivateRoute allowedRoles={['borrower', 'manager']}>
+                    <MyMessages />
                   </PrivateRoute>
                 }
               />

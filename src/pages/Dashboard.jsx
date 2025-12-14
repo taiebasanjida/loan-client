@@ -11,6 +11,7 @@ import {
   FiClock,
   FiCheckCircle,
   FiUser,
+  FiMail,
 } from 'react-icons/fi';
 
 const Dashboard = () => {
@@ -24,6 +25,7 @@ const Dashboard = () => {
     { to: '/dashboard/manage-users', label: 'Manage Users', icon: FiUsers },
     { to: '/dashboard/all-loan', label: 'All Loans', icon: FiDollarSign },
     { to: '/dashboard/loan-applications', label: 'Loan Applications', icon: FiFileText },
+    { to: '/dashboard/contact-messages', label: 'Contact Messages', icon: FiMail },
     { to: '/dashboard/profile', label: 'My Profile', icon: FiUser },
   ];
 
@@ -32,11 +34,13 @@ const Dashboard = () => {
     { to: '/dashboard/manage-loans', label: 'Manage Loans', icon: FiList },
     { to: '/dashboard/pending-loans', label: 'Pending Applications', icon: FiClock },
     { to: '/dashboard/approved-loans', label: 'Approved Applications', icon: FiCheckCircle },
+    { to: '/dashboard/my-messages', label: 'My Messages', icon: FiMail },
     { to: '/dashboard/profile', label: 'My Profile', icon: FiUser },
   ];
 
   const borrowerLinks = [
     { to: '/dashboard/my-loans', label: 'My Loans', icon: FiFileText },
+    { to: '/dashboard/my-messages', label: 'My Messages', icon: FiMail },
     { to: '/dashboard/profile', label: 'My Profile', icon: FiUser },
   ];
 
