@@ -19,6 +19,15 @@ const MyMessages = () => {
     fetchMessages();
   }, [page]);
 
+  // Auto-refresh messages every 30 seconds to check for new replies
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchMessages();
+    }, 30000); // Refresh every 30 seconds
+
+    return () => clearInterval(interval);
+  }, [page]);
+
   const fetchMessages = async () => {
     try {
       const response = await axios.get('/api/contact/my-messages', {
@@ -26,6 +35,16 @@ const MyMessages = () => {
       });
       setMessages(response.data.messages || []);
       setTotalPages(response.data.totalPages || 1);
+      
+      // If viewing a message, refresh it to get latest reply
+      if (selectedMessage) {
+        const updatedMessage = response.data.messages?.find(
+          msg => msg._id === selectedMessage._id
+        );
+        if (updatedMessage) {
+          setSelectedMessage(updatedMessage);
+        }
+      }
     } catch (error) {
       console.error('Error fetching messages:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to load messages';

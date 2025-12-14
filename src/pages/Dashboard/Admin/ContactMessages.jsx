@@ -30,10 +30,14 @@ const ContactMessages = () => {
       if (statusFilter) params.status = statusFilter;
 
       const response = await axios.get('/api/contact', { params });
-      setMessages(response.data.messages);
-      setTotalPages(response.data.totalPages);
+      setMessages(response.data.messages || []);
+      setTotalPages(response.data.totalPages || 1);
     } catch (error) {
-      toast.error('Failed to load messages');
+      console.error('Error fetching messages:', error);
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to load messages';
+      toast.error(errorMessage);
+      setMessages([]);
+      setTotalPages(1);
     } finally {
       setLoading(false);
     }
