@@ -21,6 +21,10 @@ const MyLoans = () => {
   const [repaymentData, setRepaymentData] = useState(null);
 
   useEffect(() => {
+    document.title = 'My Loans - LoanLink';
+  }, []);
+
+  useEffect(() => {
     fetchApplications();
   }, []);
 

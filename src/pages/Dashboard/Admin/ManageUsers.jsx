@@ -15,6 +15,10 @@ const ManageUsers = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
+    document.title = 'Manage Users - LoanLink';
+  }, []);
+
+  useEffect(() => {
     fetchUsers();
   }, [page, searchTerm, roleFilter]);
 

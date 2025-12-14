@@ -9,6 +9,8 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import AllLoans from './pages/AllLoans';
+import AboutUs from './pages/AboutUs';
+import Contact from './pages/Contact';
 import LoanDetails from './pages/LoanDetails';
 import LoanApplicationForm from './pages/LoanApplicationForm';
 import Dashboard from './pages/Dashboard';
@@ -37,6 +39,8 @@ function App() {
               <Route path="forgot-password" element={<ForgotPassword />} />
               <Route path="reset-password" element={<ResetPassword />} />
               <Route path="all-loans" element={<AllLoans />} />
+              <Route path="about-us" element={<AboutUs />} />
+              <Route path="contact" element={<Contact />} />
               <Route
                 path="loan-details/:id"
                 element={

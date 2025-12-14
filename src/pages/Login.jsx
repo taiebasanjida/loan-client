@@ -16,6 +16,10 @@ const Login = () => {
   const { user, login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = 'Login - LoanLink';
+  }, []);
+
   // Redirect to dashboard if already logged in
   useEffect(() => {
     if (user) {

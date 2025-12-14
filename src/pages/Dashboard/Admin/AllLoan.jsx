@@ -4,12 +4,17 @@ import axios from '../../../utils/axios';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
-import { FiEdit, FiTrash2, FiEye } from 'react-icons/fi';
+import { FiEdit, FiTrash2, FiEye, FiDownload } from 'react-icons/fi';
+import { exportToCSV, formatLoansForExport } from '../../../utils/exportUtils';
 
 const AllLoanAdmin = () => {
   const [loans, setLoans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingLoan, setEditingLoan] = useState(null);
+
+  useEffect(() => {
+    document.title = 'All Loans - Admin - LoanLink';
+  }, []);
 
   useEffect(() => {
     fetchLoans();
@@ -73,12 +78,25 @@ const AllLoanAdmin = () => {
     return <LoadingSpinner />;
   }
 
+  const handleExportCSV = () => {
+    const formattedData = formatLoansForExport(loans);
+    exportToCSV(formattedData, 'loans');
+    toast.success('Loans data exported to CSV');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-          All Loans
-        </h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">All Loans</h1>
+          <button
+            onClick={handleExportCSV}
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition flex items-center space-x-2"
+          >
+            <FiDownload className="w-5 h-5" />
+            <span>Export CSV</span>
+          </button>
+        </div>
 
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           <div className="overflow-x-auto">

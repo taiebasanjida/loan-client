@@ -10,6 +10,10 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'Home - LoanLink';
+  }, []);
+
+  useEffect(() => {
     fetchLoans();
   }, []);
 

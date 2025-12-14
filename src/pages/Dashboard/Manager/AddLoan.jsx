@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -6,6 +6,10 @@ import axios from '../../../utils/axios';
 import toast from 'react-hot-toast';
 
 const AddLoan = () => {
+  useEffect(() => {
+    document.title = 'Add Loan - LoanLink';
+  }, []);
+
   const navigate = useNavigate();
   const {
     register,

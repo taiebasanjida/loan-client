@@ -7,6 +7,10 @@ import { auth } from '../firebase/firebase.config';
 import toast from 'react-hot-toast';
 
 const ResetPassword = () => {
+  useEffect(() => {
+    document.title = 'Reset Password - LoanLink';
+  }, []);
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);

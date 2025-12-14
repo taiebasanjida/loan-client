@@ -3,7 +3,8 @@ import axios from '../../../utils/axios';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
-import { FiEye, FiFilter, FiDollarSign, FiCheckCircle } from 'react-icons/fi';
+import { FiEye, FiFilter, FiDollarSign, FiCheckCircle, FiDownload } from 'react-icons/fi';
+import { exportToCSV, formatApplicationsForExport } from '../../../utils/exportUtils';
 
 const LoanApplications = () => {
   const [applications, setApplications] = useState([]);
@@ -14,6 +15,10 @@ const LoanApplications = () => {
   const [selectedApplication, setSelectedApplication] = useState(null);
   const [showRepaymentModal, setShowRepaymentModal] = useState(false);
   const [repaymentData, setRepaymentData] = useState(null);
+
+  useEffect(() => {
+    document.title = 'Loan Applications - LoanLink';
+  }, []);
 
   useEffect(() => {
     fetchApplications();
@@ -49,6 +54,12 @@ const LoanApplications = () => {
     }
   };
 
+  const handleExportCSV = () => {
+    const formattedData = formatApplicationsForExport(applications);
+    exportToCSV(formattedData, 'loan_applications');
+    toast.success('Applications data exported to CSV');
+  };
+
   const handleRepaymentSubmit = async (amount, transactionId, paymentMethod) => {
     try {
       await axios.post(`/api/repayments/${selectedApplication._id}`, {
@@ -77,18 +88,27 @@ const LoanApplications = () => {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Loan Applications
           </h1>
-          <div className="flex items-center space-x-2">
-            <FiFilter className="text-gray-400" />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={handleExportCSV}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition flex items-center space-x-2"
             >
-              <option value="">All Status</option>
-              <option value="Pending">Pending</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-            </select>
+              <FiDownload className="w-5 h-5" />
+              <span>Export CSV</span>
+            </button>
+            <div className="flex items-center space-x-2">
+              <FiFilter className="text-gray-400" />
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                <option value="">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+            </div>
           </div>
         </div>
 

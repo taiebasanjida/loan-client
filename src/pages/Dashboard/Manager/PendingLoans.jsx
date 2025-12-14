@@ -11,6 +11,10 @@ const PendingLoans = () => {
   const [selectedApplication, setSelectedApplication] = useState(null);
 
   useEffect(() => {
+    document.title = 'Pending Applications - LoanLink';
+  }, []);
+
+  useEffect(() => {
     fetchApplications();
   }, []);
 

@@ -25,6 +25,10 @@ const LoanApplicationForm = () => {
   } = useForm();
 
   useEffect(() => {
+    document.title = 'Apply for Loan - LoanLink';
+  }, []);
+
+  useEffect(() => {
     fetchLoanDetails();
   }, [id]);
 

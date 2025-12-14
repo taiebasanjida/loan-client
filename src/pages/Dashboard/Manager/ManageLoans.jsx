@@ -4,13 +4,18 @@ import axios from '../../../utils/axios';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
-import { FiEdit, FiTrash2, FiSearch } from 'react-icons/fi';
+import { FiEdit, FiTrash2, FiSearch, FiDownload } from 'react-icons/fi';
+import { exportToCSV, formatLoansForExport } from '../../../utils/exportUtils';
 
 const ManageLoans = () => {
   const [loans, setLoans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
+
+  useEffect(() => {
+    document.title = 'Manage Loans - LoanLink';
+  }, []);
 
   useEffect(() => {
     fetchLoans();
@@ -78,6 +83,12 @@ const ManageLoans = () => {
     return <LoadingSpinner />;
   }
 
+  const handleExportCSV = () => {
+    const formattedData = formatLoansForExport(filteredLoans);
+    exportToCSV(formattedData, 'my_loans');
+    toast.success('Loans data exported to CSV');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,12 +96,21 @@ const ManageLoans = () => {
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             Manage Loans
           </h1>
-          <Link
-            to="/dashboard/add-loan"
-            className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition"
-          >
-            Add New Loan
-          </Link>
+          <div className="flex space-x-3">
+            <button
+              onClick={handleExportCSV}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition flex items-center space-x-2"
+            >
+              <FiDownload className="w-5 h-5" />
+              <span>Export CSV</span>
+            </button>
+            <Link
+              to="/dashboard/add-loan"
+              className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition"
+            >
+              Add New Loan
+            </Link>
+          </div>
         </div>
 
         {/* Search and Filter */}

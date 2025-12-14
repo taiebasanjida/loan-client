@@ -40,6 +40,18 @@ const Navbar = () => {
             >
               All Loans
             </Link>
+            <Link
+              to="/about-us"
+              className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition"
+            >
+              About Us
+            </Link>
+            <Link
+              to="/contact"
+              className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition"
+            >
+              Contact
+            </Link>
 
             {user ? (
               <>
@@ -159,6 +171,20 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               All Loans
+            </Link>
+            <Link
+              to="/about-us"
+              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              About Us
+            </Link>
+            <Link
+              to="/contact"
+              className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
             </Link>
             {user ? (
               <>

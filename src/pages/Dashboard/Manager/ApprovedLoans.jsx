@@ -12,6 +12,10 @@ const ApprovedLoans = () => {
   const [repaymentData, setRepaymentData] = useState(null);
 
   useEffect(() => {
+    document.title = 'Approved Applications - LoanLink';
+  }, []);
+
+  useEffect(() => {
     fetchApplications();
   }, []);
 

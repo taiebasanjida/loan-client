@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiMail, FiArrowLeft } from 'react-icons/fi';
@@ -7,6 +7,9 @@ import { auth } from '../firebase/firebase.config';
 import toast from 'react-hot-toast';
 
 const ForgotPassword = () => {
+  useEffect(() => {
+    document.title = 'Forgot Password - LoanLink';
+  }, []);
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
