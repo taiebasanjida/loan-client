@@ -95,7 +95,7 @@ function App() {
               <Route
                 path="dashboard/contact-messages"
                 element={
-                  <PrivateRoute allowedRoles={['admin']}>
+                  <PrivateRoute allowedRoles={['admin', 'manager']}>
                     <ContactMessages />
                   </PrivateRoute>
                 }

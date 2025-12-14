@@ -34,7 +34,7 @@ const Dashboard = () => {
     { to: '/dashboard/manage-loans', label: 'Manage Loans', icon: FiList },
     { to: '/dashboard/pending-loans', label: 'Pending Applications', icon: FiClock },
     { to: '/dashboard/approved-loans', label: 'Approved Applications', icon: FiCheckCircle },
-    { to: '/dashboard/my-messages', label: 'My Messages', icon: FiMail },
+    { to: '/dashboard/contact-messages', label: 'Contact Messages', icon: FiMail },
     { to: '/dashboard/profile', label: 'My Profile', icon: FiUser },
   ];
 
