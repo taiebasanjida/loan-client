@@ -24,10 +24,15 @@ const MyMessages = () => {
       const response = await axios.get('/api/contact/my-messages', {
         params: { page, limit: 10 },
       });
-      setMessages(response.data.messages);
-      setTotalPages(response.data.totalPages);
+      setMessages(response.data.messages || []);
+      setTotalPages(response.data.totalPages || 1);
     } catch (error) {
-      toast.error('Failed to load messages');
+      console.error('Error fetching messages:', error);
+      const errorMessage = error.response?.data?.message || error.message || 'Failed to load messages';
+      toast.error(errorMessage);
+      // Set empty array on error so UI shows "No Messages Yet" instead of error state
+      setMessages([]);
+      setTotalPages(1);
     } finally {
       setLoading(false);
     }
